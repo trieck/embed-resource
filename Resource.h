@@ -36,7 +36,6 @@ public:
 private:
     const char* resource_;
     const size_t len_;
-
 };
 
 #define LOAD_RESOURCE(RESOURCE) ([]() {                                     \
