@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstddef>
+#include <string>
+#include <sstream>
 
 class Resource
 {
@@ -33,6 +35,11 @@ public:
         return std::string(data(), size());
     }
 
+    std::istringstream toStream()
+    {
+        return std::istringstream(toString());
+    }
+
 private:
     const char* resource_;
     const size_t len_;
@@ -47,4 +54,9 @@ private:
 #define LOAD_RESOURCE_STR(RESOURCE) ([]() {         \
         auto resource = LOAD_RESOURCE(RESOURCE);    \
         return resource.toString();                 \
+    })()
+
+#define LOAD_RESOURCE_STREAM(RESOURCE) ([]() {      \
+        auto resource = LOAD_RESOURCE(RESOURCE);    \
+        return resource.toStream();                 \
     })()

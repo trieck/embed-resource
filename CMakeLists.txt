@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
 project(EmbedResource)
 
 function(embed_resources out_var)
     set(result)
-    foreach(in_f ${ARGN})
+    foreach (in_f ${ARGN})
         file(RELATIVE_PATH src_f ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/${in_f})
         set(out_f "${PROJECT_BINARY_DIR}/${in_f}.c")
         add_custom_command(OUTPUT ${out_f}
@@ -13,12 +13,12 @@ function(embed_resources out_var)
                 COMMENT "Building binary file for embedding ${out_f}"
                 VERBATIM)
         list(APPEND result "${out_f}")
-    endforeach()
+    endforeach ()
     set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
 find_package(Boost COMPONENTS filesystem REQUIRED)
-add_executable(embed-resource embedresource.cpp)
+add_executable(embed-resource embedresource.cpp Resource.h)
 target_link_libraries(embed-resource ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY})
 
 set(EMBED_RES_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
